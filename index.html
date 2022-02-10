@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;500;600&display=swap" rel="stylesheet">
+
+
+    <title>Ahorcado</title>
+</head>
+<body>
+    <section id="inicio" class="mostrar">
+        <h1>Ahorcado</h1>
+        <div class="opciones">
+            <div class="contenedor">
+                <input  id="input-palabra" class="input" placeholder="Agrega tu palabra">
+                <button id="boton-agregar" class="boton">Agregar Palabra</button>
+            </div>
+            <div class="contenedor">
+                <button id="boton-personalizar" class="boton">Personalizar Personaje</button>
+                <button id="botonPlay" class="boton">Jugar</button>
+            </div>          
+        </div>
+    </section>
+    <section id="juego" class="juego oculto">
+        <div class="contenedor-juego">
+            <div id="tablero">
+                <canvas id="canvasGame" width="500" height="500"></canvas>
+            </div>
+            <div id="contenedor-letras-erroneas">
+
+            </div>
+        </div>        
+    </section>
+    <section id="personalizacion" class="personalizacion-personaje oculto">
+        <h1>Opciones</h1>
+            <div class=contenedor>
+                <canvas id="canvasPer" width="500" height="500">
+                </canvas>
+                <div class="tablero-opciones">
+                <div class="div-opcion">
+                    <label class="label-opcion">Nombre:</label>
+                    <input class="input-opcion" type="text" id="nombre" placeholder="Nombre del personaje">    
+                </div>
+                <div class="div-opcion">
+                    <label class="label-opcion">Color:</label>
+                    <input class="input-opcion" type="color" id="colorPicker" onchange="clickColor(0, -1, -1, 5)" value="#ff8c00" style="width:85%;" colorpick-eyedropper-active="true">    
+                </div>
+                <div class="div-opcion">
+                    <label class="label-opcion">Historia:</label>
+                    <textarea class="textarea-opcion" placeholder="Pepito era un gran pirata que surco los 7 mares en busca de tesoros ......" type="textarea" id="historia"></textarea>    
+                </div>
+                <div class="botonera">
+                    <button id="boton-atras" class="boton boton-botonera">Atras</button>
+                    <button id="boton-guardar" class="boton boton-botonera">Guardar</button>
+                </div>
+            </div>       
+        </div>
+
+    </section>
+
+    <script src="javascript/graficos.js"></script>
+    <script src="javascript/palabra.js"></script>
+    <script src="javascript/personaje.js"></script>
+    <script src="javascript/main.js"></script>
+    <script src="javascript/ahorcado.js"></script>
+
+    
+</body>
+</html>

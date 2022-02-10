@@ -1,0 +1,416 @@
+:root{
+    --primario: #3F5865;
+    --primarioClaro: #517989;  
+    --blanco: #fff;
+    --negro: #000000;
+
+    --fuentePrincipal: 'Rajdhani', sans-serif;
+
+}
+
+html{
+    box-sizing: border-box;
+    font-size: 62.5%;
+}
+
+*, *:before, *:after{
+    box-sizing: inherit;
+}
+
+body{
+    background-color: var(--primario);
+    font-size: 1.6rem;
+    line-height: 1.5;
+    color: var(--blanco);    
+}
+
+h1{
+    font-family: var(--fuentePrincipal);
+    font-size: 12rem;
+    font-weight: 300;
+}
+
+.boton, .input{
+    min-width: 35rem;
+    height: 5rem;
+    margin: 1rem;
+    background-color: var(--primarioClaro);
+    color: var(--blanco);
+    font-family: var(--fuentePrincipal);
+    font-size: 1.8rem;
+    text-align: center;
+    border-color: #5989a6;
+    border-radius: 0.8rem;
+    transition: all 0.4s ease-in-out;
+
+}
+
+.boton{
+    cursor: pointer;
+}
+
+.boton:hover, input:focus, input:hover, textarea:hover, textarea:focus{
+    background-color: var(--blanco);
+    color: var(--primarioClaro);
+    transition: all 0.4s ease-in-out;
+
+}
+
+#colorPicker:hover{
+    outline: 0.5rem solid var(--blanco);
+}
+
+@media (max-width: 1300px) {
+
+    h1{
+        font-size: 8rem;
+    }
+
+    .boton, .input{
+        display: flex;
+        flex: auto;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #boton-mensaje{
+        flex: initial;
+    }
+
+    .agregar-palabra{
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+
+.input::placeholder{
+    color: lightgray;
+}
+
+
+#inicio{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.opciones{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px dashed white ;
+    border-radius: 0.3rem;
+    margin-bottom: 5rem;
+}
+
+#jugar{
+    margin-top: 20rem;
+}
+
+*::selection {
+    background-color: #E1D8CF;
+    color: #683C11;
+}
+
+.juego{
+    text-align: center;
+}
+
+/* Pantalla Juego */
+
+#canvasGame{
+    border: 1px solid #000;
+    background-image: url("../imagenes/cielo.png");
+    background-size: cover;
+}
+
+/* Pantalla Personalizacion de personaje */
+#canvasPer{
+    max-width: 65rem;
+    border: 1px solid #000;
+    background-image: url("../imagenes/cielo.png");
+    background-size: cover;
+}
+
+.personalizacion-personaje{
+    display: flex;
+    flex-direction: column;
+    border: 0.2rem dashed var(--blanco);
+    border-radius: 0.4rem;
+    padding: 4rem;
+}
+
+.personalizacion-personaje h1{
+    align-self: center;
+    margin-bottom: 4rem;
+    margin-top: 4rem;
+    font-size: 10rem;
+}
+
+.label-opcion, .input-opcion, .textarea-opcion{
+    margin: 2rem;
+    border-radius: 0.4rem;
+    font-family: var(--fuentePrincipal);
+    color: var(--blanco);
+    font-size: 2rem;
+
+}
+
+.input-opcion{
+    background-color: var(--primarioClaro);
+    border: none;
+    flex: auto;
+}
+
+#colorPicker{
+    border-radius: 0.6rem;
+    background-color: var(--negro);
+}
+
+.label-opcion{
+    max-width: 4rem;
+    flex: 1;
+}
+
+.input-opcion::placeholder, .textarea-opcion::placeholder{
+    color: lightgray;    
+}
+
+.tablero-opciones{
+    margin-left: 1rem;
+    display: flex;
+    flex: auto;
+    flex-direction: column;
+    
+}
+
+.textarea-opcion{
+    background-color: var(--primarioClaro);
+    border: none;
+    flex: auto;
+    min-height: 20rem;
+}
+
+#colorPicker::-webkit-color-swatch {
+    border: none;
+}
+
+.div-opcion{
+    display: flex;
+}
+
+
+.oculto{
+    left: 0;
+    opacity: 0;
+    position: fixed;
+    visibility: hidden;
+}
+
+.activo{
+    position: relative;
+    opacity: 1;
+    visibility: visible;
+    transition: all ease-in-out 1s;
+}
+
+#juego{
+}
+
+#personalizacion{
+}
+
+.botonera{
+    display: flex;
+    justify-content: space-between;
+}
+
+.boton-botonera{
+    min-width: 30rem;
+}
+
+.contenedor{
+    display: flex;
+    align-items: center;
+}
+
+.mostrar{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media (max-width: 1300px) {
+    .contenedor, .botonera{
+        flex-direction: column;
+    }
+
+    .boton-botonera{
+        min-width: 5rem;
+    }
+
+    .contenedor{
+        align-items: stretch;
+        align-self: center;
+    }
+    
+}
+
+/* Canvas */
+
+#canvasGame{
+    max-width: 500px;
+    max-height: 500px;
+}
+
+
+/*Tablero*/
+#tablero{
+    display: flex;
+    max-width: 140rem;
+    align-items: center;
+}
+
+.contenedor-juego{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+}
+
+@media (max-width: 1300px) {
+    #tablero{
+        margin: 5rem;
+        flex-direction: column;
+    }
+
+    .contenedor-letra{
+        margin-top: 5rem;
+    }
+}
+
+.label-letra{
+    margin: 2rem;
+    width: 4rem;
+    height: 4rem;
+    border-bottom: 0.3rem solid var(--blanco);
+}
+.contenedor-letra{
+    margin: 2rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+
+}
+
+#label-letra-erronea{
+    margin: 1rem;
+    width: 4rem;
+    height: 4rem;
+    background-color: var(--blanco);
+    color: var(--primarioClaro);
+    border-radius: 1rem;
+    font-size: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+#contenedor-letras-erroneas{
+    display: flex;
+}
+
+/* Cuando pierde */
+.label-perder{
+    color: darkred;
+}
+
+/*Mensaje*/
+
+#pantalla-mensaje{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+    border: 0px none transparent;
+    overflow: hidden;
+    margin: 0px;
+    padding: 0px;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    animation-name: mensaje-fade-in;
+    animation-duration: 1s;
+    z-index: 2147483647;
+}
+
+@keyframes mensaje-fade-in {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+
+.contenedor-mensaje{
+    background-color: var(--primario);
+    color: var(--blanco);
+    font-family: var(--fuentePrincipal);
+    font-size: 2rem;
+    width: 35rem;
+    height: 18rem;
+    border-radius: 0.7rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    border: 0.2rem solid var(--blanco);
+}
+
+.contenedor-mensaje label{
+    margin: 4rem;
+    text-align: center;
+}
+
+#boton-mensaje{
+    min-width: 4rem;
+    height: 4rem;
+}
+
+.linea{
+    margin: 0;
+    width: 100%;
+}
+
+/*Historia*/
+
+@keyframes mostrarhistoria {
+    100% {top:-100rem;}
+}
+  
+.contenedor-historia {
+top: 100rem;
+display: flex;
+background-color: whitesmoke;
+animation-name: mostrarhistoria;
+animation-duration: 20s;
+width: 60rem;
+height: 100%;
+font: var(--fuentePrincipal);
+position: relative;
+animation-name: mostrarhistoria;
+animation-duration: 25s;
+border-radius: 0.5rem;
+}
+
+.contenedor-historia label{
+    font-size: 3rem;
+    margin: 3rem;
+    color: var(--primarioClaro);
+}
