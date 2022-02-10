@@ -7,8 +7,7 @@ function crearTablero(personaje){
     var pincel = pantalla.getContext("2d");
     let palabraSecreta = crearPalabraSecreta();
     
-    console.log(palabraSecreta);
-    //mostrarhistoria();
+    mostrarhistoria();
     generarEscenario(pincel);
     generarEndiduraCerrada(pincel);
     generarCuerda(200, 200, pincel);
