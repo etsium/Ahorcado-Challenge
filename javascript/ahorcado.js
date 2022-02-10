@@ -54,44 +54,41 @@ let letrasEncontradas = [];
 
 
 function iniciarJuego(palabraSecreta, personaje, pincel){    
-    let gano = false;
-    addEventListener('keypress', (e) =>{      
-        if(intento != maxIntentos && palabraSecreta.length === letrasEncontradas.length){
-                       
+    
+    addEventListener('keypress', (e) =>{              
+        if(intento === maxIntentos){
+            graficar(personaje,pincel);
+            mostrarPalabra(palabraSecreta);
+            setTimeout(mostrarMensaje, 2000, "Fin del juego");
+            setTimeout(recargarPaginaBotonMensaje, 2000);                      
         }else{
-                if(intento === maxIntentos){
-                    graficar(personaje,pincel);
-                    mostrarPalabra(palabraSecreta);
-                    setTimeout(mostrarMensaje, 2000, "Fin del juego");
-                    setTimeout(recargarPaginaBotonMensaje, 2000);                      
-                }else{
-                        if(intento <= maxIntentos){
-                            let letra = e.key.toUpperCase();
-                            let letraPosiciones = [];  
-                
-                    
-                            if (/^[A-Z]+$/.test(letra) && letraNoEsta(letrasPersionadas, letra) && letra != "ENTER"){ 
-                                letrasPersionadas.push(letra);           
-                                if(!letraNoEsta(palabraSecreta, letra)){ 
-                                    letraPosiciones = buscarPosicionesLetra(palabraSecreta, letra);                  
-                                    mostrarLetra(letra, letraPosiciones);
-                                    if(palabraSecreta.length === letrasEncontradas.length){
-                                        setTimeout(generarPantallaGanador, 500, personaje, pincel);
-                                        setTimeout(recargarPagina, 4000); 
-                                    }           
-                                }else{
-                                    graficar(personaje, pincel);
-                                    intento++;
-                                    mostrarLetraErronea(letra);
-                                }
-                                
-                            }else{
-                                mostrarMensaje("Ya has provado esa letra, intenta con otra");
-                            }
+                if(intento <= maxIntentos){
+                    let letra = e.key.toUpperCase();
+                    let letraPosiciones = [];  
+        
+            
+                    if (/^[A-Z]+$/.test(letra) && letraNoEsta(letrasPersionadas, letra) && letra != "ENTER"){ 
+                        letrasPersionadas.push(letra);           
+                        if(!letraNoEsta(palabraSecreta, letra)){ 
+                            letraPosiciones = buscarPosicionesLetra(palabraSecreta, letra);                  
+                            mostrarLetra(letra, letraPosiciones);
+                            if(palabraSecreta.length === letrasEncontradas.length){
+                                setTimeout(generarPantallaGanador, 500, personaje, pincel);
+                                setTimeout(recargarPagina, 4000); 
+                            }           
+                        }else{
+                            graficar(personaje, pincel);
+                            intento++;
+                            mostrarLetraErronea(letra);
                         }
-                
-                    }          
-            }                 
+                        
+                    }else{
+                        mostrarMensaje("Ya has provado esa letra, intenta con otra");
+                    }
+                }
+        
+            }          
+                             
     });
 }
 
