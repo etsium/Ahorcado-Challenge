@@ -1,16 +1,16 @@
-const maxIntentos = 5;
+const maxIntentos = 6;
 let intento = 0;
 var botonMensaje = document.querySelector("#boton-mensaje");
+let estadoJuego = "iniciado";
 
 function crearTablero(personaje){
     var pantalla = document.querySelector("#canvasGame");
     var pincel = pantalla.getContext("2d");
     let palabraSecreta = crearPalabraSecreta();
     
-    mostrarhistoria();
+    //mostrarhistoria();
     generarEscenario(pincel);
     generarEndiduraCerrada(pincel);
-    generarCuerda(200, 200, pincel);
     crearTableroPalabra(palabraSecreta);
     iniciarJuego(palabraSecreta, personaje, pincel); 
     
@@ -55,39 +55,32 @@ let letrasEncontradas = [];
 
 function iniciarJuego(palabraSecreta, personaje, pincel){    
     
-    addEventListener('keypress', (e) =>{              
-        if(intento === maxIntentos){
-            graficar(personaje,pincel);
-            mostrarPalabra(palabraSecreta);
-            setTimeout(mostrarMensaje, 2000, "Fin del juego");
-            setTimeout(recargarPaginaBotonMensaje, 2000);                      
-        }else{
-                if(intento <= maxIntentos){
-                    let letra = e.key.toUpperCase();
-                    let letraPosiciones = [];  
-        
-            
-                    if (/^[A-Z]+$/.test(letra) && letraNoEsta(letrasPersionadas, letra) && letra != "ENTER"){ 
-                        letrasPersionadas.push(letra);           
-                        if(!letraNoEsta(palabraSecreta, letra)){ 
-                            letraPosiciones = buscarPosicionesLetra(palabraSecreta, letra);                  
-                            mostrarLetra(letra, letraPosiciones);
-                            if(palabraSecreta.length === letrasEncontradas.length){
-                                setTimeout(generarPantallaGanador, 500, personaje, pincel);
-                                setTimeout(recargarPagina, 4000); 
-                            }           
-                        }else{
-                            graficar(personaje, pincel);
-                            intento++;
-                            mostrarLetraErronea(letra);
-                        }
-                        
-                    }else{
-                        mostrarMensaje("Ya has provado esa letra, intenta con otra");
+
+
+    addEventListener('keypress', (e) =>{            
+            let letra = e.key.toUpperCase();
+            let letraPosiciones = [];  
+    
+            if (/^[A-Z]+$/.test(letra) && letraNoEsta(letrasPersionadas, letra) && letra != "ENTER"){ 
+                letrasPersionadas.push(letra);           
+                if(!letraNoEsta(palabraSecreta, letra)){ 
+                    letraPosiciones = buscarPosicionesLetra(palabraSecreta, letra);                  
+                    mostrarLetra(letra, letraPosiciones);
+                    if(palabraSecreta.length === letrasEncontradas.length){
+                        setTimeout(generarPantallaGanador, 500, personaje, pincel);
+                        setTimeout(recargarPagina, 4000); 
                     }
+                                
+                }else{
+                    graficar(personaje, pincel, palabraSecreta);
+                    intento++;
+                    mostrarLetraErronea(letra);
                 }
-        
-            }          
+                
+            }else{
+                mostrarMensaje("Ya has provado esa letra, intenta con otra");
+            }
+           
                              
     });
 }
@@ -148,12 +141,16 @@ function recargarPagina(){
     window.location.reload();
 }
 
-function graficar(personaje, pincel) {
+function graficar(personaje, pincel, palabraSecreta) {
     let color = personaje.obtenerColor();
     let x = 200;
     let y = 200;
 
     switch (intento) {
+        case 0:
+        generarCuerda(x, y, pincel); 
+        break;
+
         case 1:
         generarPiesFirmes(x, y, color, pincel);   
         break;
@@ -170,9 +167,12 @@ function graficar(personaje, pincel) {
         generarCabeza(x, y, color, pincel);
         break;
 
-        case 5:
+        case 5:            
+        mostrarPalabra(palabraSecreta);          
         generarCuello(x, y, "#a38c79", pincel);
         setInterval(animacionMuertePersonaje, 40, pincel, personaje);
+        setTimeout(mostrarMensaje, 2000, "Fin del juego");
+        setTimeout(recargarPaginaBotonMensaje, 2000);  
         break;
 
         default:
