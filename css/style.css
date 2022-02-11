@@ -391,6 +391,9 @@ h1{
 /*Historia*/
 
 @keyframes mostrarhistoria {
+    0%{animation-play-state: running; top: 100rem;}
+    25% {animation-play-state: paused; top: 0rem;}
+    75% {animation-play-state: paused; top: 0rem;}
     100% {top:-100rem;}
 }
   
@@ -401,11 +404,10 @@ background-color: whitesmoke;
 animation-name: mostrarhistoria;
 animation-duration: 20s;
 width: 60rem;
-height: 100%;
 font: var(--fuentePrincipal);
 position: relative;
 animation-name: mostrarhistoria;
-animation-duration: 25s;
+animation-duration: 10s;
 border-radius: 0.5rem;
 }
 

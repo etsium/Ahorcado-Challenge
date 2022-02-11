@@ -8,7 +8,7 @@ function crearTablero(personaje){
     var pincel = pantalla.getContext("2d");
     let palabraSecreta = crearPalabraSecreta();
     
-    //mostrarhistoria();
+    mostrarhistoria();
     generarEscenario(pincel);
     generarEndiduraCerrada(pincel);
     crearTableroPalabra(palabraSecreta);
@@ -53,34 +53,38 @@ let letrasPersionadas = [];
 let letrasEncontradas = [];
 
 
-function iniciarJuego(palabraSecreta, personaje, pincel){    
-    
+function iniciarJuego(palabraSecreta, personaje, pincel){  
 
+    addEventListener('keypress', (e) =>{
+            
+            if(!existeUnMensaje()){
+                let letra = e.key.toUpperCase();
+                let letraPosiciones = [];
+                console.log(palabraSecreta);
+                if (/^[A-Z]+$/.test(letra) && letraNoEsta(letrasPersionadas, letra) && letra != "ENTER"){ 
+                    letrasPersionadas.push(letra);              
+                    if(!letraNoEsta(palabraSecreta, letra) ){ 
 
-    addEventListener('keypress', (e) =>{            
-            let letra = e.key.toUpperCase();
-            let letraPosiciones = [];  
-    
-            if (/^[A-Z]+$/.test(letra) && letraNoEsta(letrasPersionadas, letra) && letra != "ENTER"){ 
-                letrasPersionadas.push(letra);           
-                if(!letraNoEsta(palabraSecreta, letra)){ 
-                    letraPosiciones = buscarPosicionesLetra(palabraSecreta, letra);                  
-                    mostrarLetra(letra, letraPosiciones);
-                    if(palabraSecreta.length === letrasEncontradas.length){
-                        setTimeout(generarPantallaGanador, 500, personaje, pincel);
-                        setTimeout(recargarPagina, 4000); 
+                        letraPosiciones = buscarPosicionesLetra(palabraSecreta, letra); 
+
+                        agregarLetrasEncontradas(buscarPosicionesLetra(palabraSecreta, letra).length, letra);
+                        mostrarLetra(letra, letraPosiciones);                   
+
+                        if(palabraSecreta.length === letrasEncontradas.length){
+                            setTimeout(generarPantallaGanador, 1, personaje, pincel);
+                            setTimeout(recargarPagina, 4000); 
+                        }
+                                    
+                    }else{
+                        intento++;
+                        graficar(personaje, pincel, palabraSecreta);
+                        mostrarLetraErronea(letra);
                     }
-                                
+                    
                 }else{
-                    graficar(personaje, pincel, palabraSecreta);
-                    intento++;
-                    mostrarLetraErronea(letra);
+                    mostrarMensaje("Ya has provado la letra " + letra + " intenta con otra");
                 }
-                
-            }else{
-                mostrarMensaje("Ya has provado esa letra, intenta con otra");
-            }
-           
+            }              
                              
     });
 }
@@ -91,12 +95,18 @@ function letraNoEsta(array, letra){
 
     array.forEach(elemento => {
         if( elemento === letra){
-            letrasEncontradas.push(letra);
             noEsta = false;
         }
     });
 
     return noEsta;
+}
+
+function agregarLetrasEncontradas(cantidad, letra){
+
+    for (let i = 0; i < cantidad; i++) {
+        letrasEncontradas.push(letra);        
+    }    
 }
 
 function mostrarLetraErronea(letra){
@@ -147,11 +157,9 @@ function graficar(personaje, pincel, palabraSecreta) {
     let y = 200;
 
     switch (intento) {
-        case 0:
-        generarCuerda(x, y, pincel); 
-        break;
 
         case 1:
+        generarCuerda(x, y, pincel); 
         generarPiesFirmes(x, y, color, pincel);   
         break;
 
@@ -206,10 +214,20 @@ function mostrarhistoria(){
         pantalleNegro.setAttribute("id","pantalla-mensaje");
         divConenedorHisotria.classList.add("contenedor-historia");
 
-        setTimeout(cerrarHisotria, 20000, pantalleNegro);
+        setTimeout(cerrarHisotria, 10000, pantalleNegro);
     }
 }
 
 function cerrarHisotria(pantalleNegro) {
     pantalleNegro.remove();
+}
+
+function existeUnMensaje(){
+    let existe = false;
+
+    if(document.querySelector("#pantalla-mensaje") != null){
+        existe = true;
+    }
+
+    return existe;
 }

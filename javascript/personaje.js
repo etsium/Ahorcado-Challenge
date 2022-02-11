@@ -14,13 +14,17 @@ class Personaje{
         const botonPersonalizar = document.querySelector("#boton-personalizar");
 
         botoGuardar.addEventListener('click', () => {
-            this.#guardarValores();            
-            mostrarInicio();
+            console.log(this.camposValidos());
+            if(this.camposValidos()){
+                this.#guardarValores();            
+                mostrarInicio();
+            }
         });
 
         botonPersonalizar.addEventListener('click', () => {
             this.#mostrarValores();
         })
+        
     }
     
     #guardarValores(){
@@ -29,7 +33,7 @@ class Personaje{
 
         this.#color = document.querySelector("#colorPicker").value;
         localStorage.setItem("color", this.#color);
-
+        
         this.#historia = document.querySelector("#historia").value; 
         localStorage.setItem("historia", this.#historia);  
     }
@@ -52,5 +56,23 @@ class Personaje{
         return this.#historia;
     }
 
+    camposValidos(){
+        let camposValidos = false;
+        if(document.querySelector("#nombre").value === ""){
+            camposValidos = false;
+            mostrarMensaje("El campo nombre no puede estar vacio");
+        }else{
+            camposValidos = true;
+        }
+
+        if(document.querySelector("#historia").value.length < 20){
+            camposValidos = false;
+            mostrarMensaje("La historia debe contener al menos 20 caracateres");
+        }else{
+            camposValidos = true;
+        }
+
+        return camposValidos;
+    }
     
 }

@@ -29,12 +29,15 @@ inputAgregrar.onkeyup = function(){
 
 const botonAgregar = document.querySelector("#boton-agregar");
 botonAgregar.addEventListener('click', () =>{
-    var palabra = document.querySelector("#input-palabra").value;
+    let palabra = document.querySelector("#input-palabra").value;
+
     if(palabra === ""){
         mostrarMensaje("La Palabra esta vacia");
     }else{
-        palabras.push(new Palabra(palabra));
-        inputAgregrar.value = "";
+        if(!comoprobarSiLaPalabraEsta()){
+            palabras.push(new Palabra(palabra));
+            inputAgregrar.value = "";
+        }        
     }    
 });
 
@@ -163,4 +166,19 @@ function mostrarMensaje(mensaje){
         });
 
     }
+}
+
+function comoprobarSiLaPalabraEsta(){
+    esta = false;
+    
+    palabras.forEach(palabra => {
+
+        if( palabra.obtenerPalabra() === document.querySelector("#input-palabra").value){
+            mostrarMensaje("La palabra " + palabra.obtenerPalabra() + " ya existe.");
+            esta = true;
+        }
+    });
+    
+
+    return esta;
 }
